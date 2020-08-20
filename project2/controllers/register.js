@@ -15,6 +15,7 @@ function register(req, res, next) {
       user = new Users();
       user.username = req.body.username;
       user.password = md5(req.body.password) + "jungu";
+      user.avatar = "default";
       user.save(function (err) {
         if (err) return res.render("register");
       });

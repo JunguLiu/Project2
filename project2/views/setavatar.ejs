@@ -1,0 +1,12 @@
+<%- include('header.ejs') -%>
+<body>
+  <div class="container">
+    <form action="/setAvatar/doset" method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <label>Upload Avatar</label>
+        <input type="file" class="form-control" name="avatar" />
+      </div>
+      <button type="submit" class="btn btn-lg btn-success">Submit</button>
+    </form>
+  </div>
+</body>

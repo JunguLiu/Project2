@@ -14,7 +14,7 @@ function login(req, res, next) {
   }).exec(function (err, user) {
     if (user.length) {
       req.session.login = 1;
-      req.session.username = login_username;
+      req.session.username = req.body.username;
       res.redirect("/");
     } else {
       res.render("login", { error: 1 });
