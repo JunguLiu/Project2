@@ -16,22 +16,26 @@
       href="../../assets/css/ie10-viewport-bug-workaround.css"
       rel="stylesheet"
     />
-    <!-- <link href="jumbotron-narrow.css" rel="stylesheet" /> -->
-<!-- 
-      <script src="../../assets/js/ie-emulation-modes-warning.js"></script> -->
+    <script
+ 	src="https://code.jquery.com/jquery-3.2.1.min.js"
+ 	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+ 	crossorigin="anonymous"></script>
 
     <script type="text/javascript">
      
-      window.onload= f();
-      
-      async function f(){
-          var result;
-          document.getElementById('allPosts').addEventListener('click',function(){
+    window.onload= function (){
+      allPost();
+      var result;
+      document.getElementById('allPosts').addEventListener('click',allPost);
+      document.getElementById('myPosts').addEventListener('click',myPost);
+
+      function allPost(){
+          document.getElementById('posts').innerHTML=''
           fetch("http://localhost:3000/post/allPost").then((response) => response.json())
           .then((posts) => {
             for (var prop in posts) {
-              var user = await fetch(`http://localhost:3000/post/userInfo?username=${posts[prop].username}`).then((response) => response.json());
-              document.getElementById('posts').innerHTML += 
+              $.ajax({url:`http://localhost:3000/post/userInfo?username=${posts[prop].username}`,type:'get',async:false ,success: function(user){   
+                document.getElementById('posts').innerHTML += 
                 `<div  class="col-md-4"> 
                 <h2><img src="/images/${user[0].avatar}" width="40">
                 ${posts[prop].username} say:</h2>
@@ -41,12 +45,31 @@
                 <a class="btn btn-default" href='/post/${posts[prop]._id}' role="button">View details &raquo;</a></p>
                 </p>
                 </div>`
+              }})
             }
       });
+    }
 
+    function myPost(){
+          document.getElementById('posts').innerHTML='';
+          fetch("http://localhost:3000/post/myPost").then((response) => response.json())
+          .then((posts) => {
+            for (var prop in posts) {
+              $.ajax({url:`http://localhost:3000/post/userInfo?username=${posts[prop].username}`,type:'get',async:false ,success: function(user){   
+                document.getElementById('posts').innerHTML += 
+                `<div  class="col-md-4"> 
+                <h2><img src="/images/${user[0].avatar}" width="40">
+                ${posts[prop].username} say:</h2>
+                <p>
+                ${posts[prop].content}
+                <p>
+                <a class="btn btn-default" href='/post/${posts[prop]._id}' role="button">View details &raquo;</a></p>
+                </p>
+                </div>`
+              }})
+            }
+      });
       }
-      
-    );
  }
     
      

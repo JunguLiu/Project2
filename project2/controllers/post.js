@@ -25,13 +25,13 @@ function detail(req, res, next) {
 
 function allPost(req, res, next) {
   Posts.find({}, function (err, posts) {
-    res.json(posts);
+    res.json(posts.reverse());
   });
 }
 
 function myPost(req, res, next) {
   Posts.find({ username: req.session.username }, function (err, posts) {
-    res.json(posts);
+    res.json(posts.reverse());
   });
 }
 
@@ -51,7 +51,6 @@ function comment(req, res, next) {
 }
 
 function userInfo(req, res, next) {
-  console.log(req.query);
   User.find({ username: req.query.username }).exec(function (err, user) {
     res.json(user);
   });

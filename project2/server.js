@@ -12,6 +12,7 @@ var postRouter = require("./routes/post");
 var avatarRouter = require("./routes/avatar");
 
 var app = express();
+require("dotenv").config({ path: __dirname + "/.env" });
 require("./config/database");
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
