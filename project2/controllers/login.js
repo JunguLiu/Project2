@@ -15,6 +15,7 @@ function login(req, res, next) {
     if (user.length) {
       req.session.login = 1;
       req.session.username = req.body.username;
+      req.session.avatar = user[0].avatar;
       res.redirect("/");
     } else {
       res.render("login", { error: 1 });

@@ -1,4 +1,72 @@
-<%- include('header.ejs') -%>
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" href="../../favicon.ico" />
+    <title>My WeiBo</title>
+    <link
+      href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="../../assets/css/ie10-viewport-bug-workaround.css"
+      rel="stylesheet"
+    />
+    <!-- <link href="jumbotron-narrow.css" rel="stylesheet" /> -->
+<!-- 
+      <script src="../../assets/js/ie-emulation-modes-warning.js"></script> -->
+
+    <script type="text/javascript">
+     
+      window.onload= f();
+      
+      async function f(){
+          var result;
+          document.getElementById('allPosts').addEventListener('click',function(){
+          fetch("http://localhost:3000/post/allPost").then((response) => response.json())
+          .then((posts) => {
+            for (var prop in posts) {
+              var user = await fetch(`http://localhost:3000/post/userInfo?username=${posts[prop].username}`).then((response) => response.json());
+              document.getElementById('posts').innerHTML += 
+                `<div  class="col-md-4"> 
+                <h2><img src="/images/${user[0].avatar}" width="40">
+                ${posts[prop].username} say:</h2>
+                <p>
+                ${posts[prop].content}
+                <p>
+                <a class="btn btn-default" href='/post/${posts[prop]._id}' role="button">View details &raquo;</a></p>
+                </p>
+                </div>`
+            }
+      });
+
+      }
+      
+    );
+ }
+    
+     
+    </script>
+  
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation">
+              <button class="btn btn-lg btn-success" id="allPosts">All Posts</button>
+            </li>
+            <button class="btn btn-lg btn-success" id='myPosts'>My Posts</button>
+          </ul>
+        </nav>
+        <h2 class="text-muted">My WeiBo</h2>
+      </div>
 
 <div class="jumbotron">
   <div class="container">
@@ -19,7 +87,7 @@
         <h2>Hello! <%=username%></h2>
         <div class="row">
             <div class='col-lg-3'>
-              <a href="/static"><img src="/images/<%=avatar%>.jpg"></a>
+              <a href="/static"><img src="/images/<%=avatar%>" width="230px" height="206px"></a>
               <a class="btn btn-lg btn-success" href="/setAvatar" role="button"
             >Set Avatar</a>
             </div>
@@ -33,21 +101,10 @@
         <%}%>
 </div>
 <div class="container">
-      <div class="row marketing">
-       <%posts.forEach( (p)=>{%>
-        <div class="col-lg-6"> 
-          <h4><%=p.username%></h4>
-          <p>
-            <%=p.content %>
-            <p>
-              <a class="btn btn-default" href='/post/<%= p._id %>' role="button">View details &raquo;</a></p>
-          </p>
-        </div>      
-        <%}); %>
-      </div>
+  <div id="posts" class="row">
 
-    </div>
+</div>
+</div>
 
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>

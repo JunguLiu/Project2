@@ -1,2 +1,28 @@
 <%- include('header.ejs') -%>
-<body></body>
+<body>
+  <div class="container">
+    <p>Username: <%=post.username%></p>
+    <br />
+    <p>Content: <%=post.content%></p>
+    <br />
+    <p>Create At: <%=post.createAt.toISOString().slice(0, 16)%></p>
+    <br />
+    <p>Comments:</p>
+    <% post.comment.reverse().forEach((c)=>{%>
+    <p>
+      <%=c.username%> : <%=c.content%>
+    </p>
+    <p><%=c.createAt.toISOString().slice(0, 16)%></p>
+    <%});%> <%if(login) {%>
+    <form action="/post/<%=post._id%>" method="POST">
+      <textarea
+        name="content"
+        cols="80"
+        rows="10"
+        required="required"
+      ></textarea>
+      <button class="btn btn-lg btn-success" type="submit">Comment</button>
+    </form>
+    <%}%>
+  </div>
+</body>

@@ -12,12 +12,17 @@ function doset(req, res, next) {
   var form = new formidable.IncomingForm();
   form.uploadDir = path.normalize(__dirname + "/../public/images");
   form.parse(req, function (err, fields, files) {
+    //get fileExtension
+    var fileExtension = files.avatar.name.substring(
+      files.avatar.name.lastIndexOf(".")
+    );
+
     var oldpath = files.avatar.path;
     var newpath =
       path.normalize(__dirname + "/../public/images") +
       "/" +
       req.session.username +
-      ".jpg";
+      fileExtension;
     fs.rename(oldpath, newpath, function (err) {
       if (err) {
         res.send("fail");
@@ -25,9 +30,10 @@ function doset(req, res, next) {
       }
       Users.findOneAndUpdate(
         { username: req.session.username },
-        { avatar: "updated" },
+        { avatar: req.session.username + fileExtension },
         function (err, todd) {}
       );
+      req.session.avatar = req.session.username + fileExtension;
       res.redirect("/");
     });
   });
