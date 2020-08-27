@@ -23,7 +23,17 @@ function login(req, res, next) {
   });
 }
 
+function logout(req, res, next) {
+  req.session.login = 0;
+  req.session.username = "";
+  req.session.avatar = "default.jpg";
+  req.session.passport = "";
+  req.logout();
+  res.redirect("/");
+}
+
 module.exports = {
   index,
   login,
+  logout,
 };

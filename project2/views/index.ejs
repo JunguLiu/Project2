@@ -84,8 +84,14 @@
           <ul class="nav nav-pills pull-right">
             <li role="presentation">
               <button class="btn btn-lg btn-success" id="allPosts">All Posts</button>
-            </li>
-            <button class="btn btn-lg btn-success" id='myPosts'>My Posts</button>
+              <button class="btn btn-lg btn-success" id='myPosts'>My Posts</button>
+            
+          </li>
+          <li>
+            <% if(login){%>
+              <a href="/login/logout" class="btn btn-lg btn-success" role="button">Log out</a>
+              
+              <% }%></li> 
           </ul>
         </nav>
         <h2 class="text-muted">My WeiBo</h2>
@@ -104,6 +110,8 @@
           <a class="btn btn-lg btn-success" href="/register" role="button"
             >Sign up today</a
           >
+         <a href="/auth/google" class="btn btn-lg btn-success">Login with Google</a>
+            
         </p>
       </div>
       <%}else{%>
