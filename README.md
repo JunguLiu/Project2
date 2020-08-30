@@ -3,7 +3,7 @@
 My Weibo
 You can post messages in this website and leave comments to other user's posts
 
-## Screenshot(s): 
+## Screenshot: 
 
 ## Technologies Used: 
 Nodejs
